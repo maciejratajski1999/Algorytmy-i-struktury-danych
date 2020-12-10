@@ -1,5 +1,6 @@
 import Fraction.Fraction
 
+@Suppress("UNUSED_VARIABLE")
 fun main() {
     val f1 = Fraction(12,-47)
     val f2 = Fraction("56","64")
