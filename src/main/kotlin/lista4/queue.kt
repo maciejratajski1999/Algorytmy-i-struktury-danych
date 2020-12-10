@@ -11,7 +11,7 @@ class FrontQueue<X>(val list: MList<X> = MList.NIL()) {
     fun isEmpty() = this.top() == null
 }
 
-data class FullQueue<X>(val enqueueList: MList<X> = MList.empty(), val dequeueList: MList<X> = MList.empty()) {
+data class FullQueue<X>(val enqueueList: MList<X> = MList.empty(), val dequeueList: MList<X> = MList.empty<X>()) {
     fun enqueue(new: X): FullQueue<X> = copy(enqueueList = enqueueList.prepend(new))
     fun dequeue(): FullQueue<X> = when (dequeueList) {
         is MList.NIL<X> -> copy(enqueueList = MList.empty(), dequeueList = enqueueList.reverse().tail())

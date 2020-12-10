@@ -1,7 +1,7 @@
 package lista4
 
 
-sealed class MList< T> {
+sealed class MList< out T> {
     class NIL<T> : MList<T>() {
         override fun toString(): String = "[]"
         override fun tail(): MList<T> = this
@@ -17,16 +17,19 @@ sealed class MList< T> {
     abstract fun tail(): MList<T>
     abstract fun head(): T?
 
-    @Suppress("NOTHING_TO_INLINE")
-    inline fun prepend(t:T) = MList.Node(t, this)
+
 
     companion object {
         val emptyObj = MList.NIL<Nothing>()
         @Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
-        //inline fun <T> empty() = emptyObj as MList.NIL<T>
+//        inline fun <T> empty():MList<T> = emptyObj //contrary to expectation this is a little slower!
         inline fun <T> empty():MList.NIL<T> = NIL()
     }
 }
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T> MList<T>.prepend(t:T) = MList.Node(t, this)
+
+
 fun <T> MList.Node<T>.last():T = this.tail().let {tail ->
     when (tail) {
         is MList.Node -> tail.last()
@@ -39,7 +42,7 @@ fun <T> MList.NIL<T>.last():T? = null
 
 fun <T> MList<T>.reverse() = when (this) {
     is MList.NIL -> this
-    else -> reverseHelper(this, MList.empty())
+    else -> reverseHelper(this, MList.empty<T>())
 }
 
 tailrec fun <T> reverseHelper(list:MList<T>, acc:MList<T>):MList<T> = when (list) {
@@ -52,7 +55,7 @@ private tailrec fun <T> appendHelper(list:MList<T>, acc:MList<T>, last: T):MList
     is MList.Node -> appendHelper(list.tail(), acc.prepend(list.head()), last)
 }
 
-fun <T> MList<T>.append( last: T): MList<T> = appendHelper(this, MList.empty(), last).reverse()
+fun <T> MList<T>.append( last: T): MList<T> = appendHelper(this, MList.empty<T>(), last).reverse()
 
 fun main() {
     val x = MList.NIL<Int>()
