@@ -17,7 +17,8 @@ sealed class MList< T> {
     abstract fun tail(): MList<T>
     abstract fun head(): T?
 
-    fun prepend(t:T) = MList.Node(t, this)
+    @Suppress("NOTHING_TO_INLINE")
+    inline fun prepend(t:T) = MList.Node(t, this)
 
     companion object {
         val emptyObj = MList.NIL<Nothing>()
@@ -38,12 +39,12 @@ fun <T> MList.NIL<T>.last():T? = null
 
 fun <T> MList<T>.reverse() = when (this) {
     is MList.NIL -> this
-    is MList.Node -> reverseHelper(this, MList.empty())
+    else -> reverseHelper(this, MList.empty())
 }
 
 tailrec fun <T> reverseHelper(list:MList<T>, acc:MList<T>):MList<T> = when (list) {
     is MList.Node -> reverseHelper(list.tail(), acc.prepend(list.head()))
-    is MList.NIL -> acc
+    else -> acc
 }
 
 private tailrec fun <T> appendHelper(list:MList<T>, acc:MList<T>, last: T):MList<T> = when (list) {
