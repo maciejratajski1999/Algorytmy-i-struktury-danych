@@ -26,6 +26,9 @@ fun <T> MList.Node<T>.last():T = this.tail().let {tail ->
         is MList.NIL -> this.head()
     }
 }
+fun <T> MList.NIL<T>.last():T? = null
+
+
 
 fun <T> MList<T>.reverse() = when (this) {
     is MList.NIL -> this

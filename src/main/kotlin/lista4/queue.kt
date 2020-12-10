@@ -10,11 +10,28 @@ class FrontQueue<X>(val list: MList<X> = MList.NIL()){
     override fun toString(): String = list.toString()
     fun isEmpty() = this.top()==null
 }
+class FullQueue<X>(val enqueueList: MList<X> = MList.empty(), val dequeueList: MList<X> = MList.empty()){
+    fun enqueue(new: X):FullQueue<X> = FullQueue(enqueueList.prepend(new), dequeueList)
+    fun dequeue(): FullQueue<X> = when (dequeueList) {
+        is MList.NIL<X> -> FullQueue(MList.empty(), enqueueList.reverse().tail())
+        else -> FullQueue(enqueueList, dequeueList.tail())
+    }
+    fun top(): X? = when (dequeueList) {
+        is MList.NIL<X> -> when (enqueueList) {
+            is MList.NIL<X> -> null
+            is MList.Node<X> -> enqueueList.last()
+        }
+        else -> dequeueList.head()
+    }
 
-//fun main(){
-//    val x = FrontQueue<Int>()
-//    val y = x.enqueue(1)
-//    val z = y.enqueue(2)
-//    val bigList = z.enqueue(10).enqueue(11).enqueue(-2)
-//    println(bigList.dequeue().list)
-//}
+    override fun toString(): String = enqueueList.toString() + " / " + dequeueList.toString()
+}
+
+fun main(){
+    val x = FullQueue<Int>()
+    val y = x.enqueue(1)
+    val z = y.enqueue(2)
+    val bigList = z.enqueue(10).enqueue(11).enqueue(-2)
+    println(bigList)
+    println(bigList.dequeue())
+}
