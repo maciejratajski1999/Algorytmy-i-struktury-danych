@@ -33,3 +33,5 @@ fun main(){
 // for tries = 100000 : 38009  <-- naive append v.2
 // for tries = 100000 : 35     <-- FullQueue
 // for tries = 10000000 : 11503 <-- FullQueue
+// for tries = 5000000 : 6233 <--FullQueue
+// for tries = 10000000 : 3281 (11543) <--FullQueue
