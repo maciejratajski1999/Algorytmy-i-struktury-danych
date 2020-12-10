@@ -21,9 +21,8 @@ sealed class MList< out T> {
 
     companion object {
         val emptyObj = MList.NIL<Nothing>()
-        @Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
-//        inline fun <T> empty():MList<T> = emptyObj //contrary to expectation this is a little slower!
-        inline fun <T> empty():MList.NIL<T> = NIL()
+        @Suppress("NOTHING_TO_INLINE")
+        inline fun <T> empty():MList<T> = emptyObj
     }
 }
 @Suppress("NOTHING_TO_INLINE")
