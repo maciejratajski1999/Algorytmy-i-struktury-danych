@@ -15,28 +15,41 @@ sealed class MList<T> {
 
     abstract fun tail(): MList<T>
     abstract fun head(): T?
+    fun prepend(t:T) = MList.Node(t, this)
+    companion object {
+        fun <T> empty() = MList.NIL<T>()
+    }
 }
-tailrec fun <T> append(list: MList<T>, last: T):MList<T> = when(list){
+fun <T> MList.Node<T>.last():T = this.tail().let {tail ->
+    when (tail) {
+        is MList.Node -> tail.last()
+        is MList.NIL -> this.head()
+    }
+}
+
+fun <T> MList<T>.reverse() = when (this) {
+    is MList.NIL -> this
+    is MList.Node -> reverseHelper(this, MList.empty())
+}
+
+private tailrec fun <T> reverseHelper(list:MList<T>, acc:MList<T>):MList<T> = when (list) {
+    is MList.NIL -> acc
+    is MList.Node -> reverseHelper(list.tail(), acc.prepend(list.head()))
+}
+
+fun <T> append(list: MList<T>, last: T):MList.Node<T> = when(list){
     is MList.NIL -> MList.Node(last, list)
     is MList.Node -> MList.Node(list.head(),append(list.tail(), last))
 }
-//fun main() {
-//    val x = MList.NIL<Int>()
-//    println(x)
-//
-//    val y = MList.Node(7,x)
-//    println(y)
-//
-//    val z = MList.Node(5, y)
-//    println(z)
-//
-//    println(z.tail())
-//    println(z.tail().head())
-//    println(x.head())
-//
-//    val a = z.tail().head()
-//    if (a != null){
-//        println(a+1)
-//    }
-//    println(append(z,10))
-//}
+fun main() {
+    val x = MList.NIL<Int>()
+    println(x)
+
+    val y = MList.Node(7,x)
+    println(y)
+
+    val z = MList.Node(5, y)
+    println(z)
+
+    println(reverseHelper(MList.Node<Int>(10, z), MList.empty()))
+}
