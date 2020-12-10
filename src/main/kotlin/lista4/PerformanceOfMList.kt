@@ -13,3 +13,5 @@ fun main(){
     println( myQueue.isEmpty())
     println(System.currentTimeMillis() - timer)
 }
+// for tries = 100000 : 38608  <-- naive append
+// for tries = 100000 : 38009  <-- naive append v.2

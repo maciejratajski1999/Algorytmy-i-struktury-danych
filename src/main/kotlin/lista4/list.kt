@@ -37,7 +37,12 @@ private tailrec fun <T> reverseHelper(list:MList<T>, acc:MList<T>):MList<T> = wh
     is MList.Node -> reverseHelper(list.tail(), acc.prepend(list.head()))
 }
 
-fun <T> MList<T>.append( last: T): MList<T> = this.reverse().prepend(last).reverse()
+private tailrec fun <T> appendHelper(list:MList<T>, acc:MList<T>, last: T):MList<T> = when (list) {
+    is MList.NIL -> acc.prepend(last)
+    is MList.Node -> appendHelper(list.tail(), acc.prepend(list.head()), last)
+}
+
+fun <T> MList<T>.append( last: T): MList<T> = appendHelper(this, MList.empty(), last).reverse()
 
 fun main() {
     val x = MList.NIL<Int>()
@@ -51,4 +56,7 @@ fun main() {
 
     val z2 = z.append(10).append(-2)
     println(z2)
+
+    val z3 = z2.append(-17)
+    println(z3)
 }
