@@ -1,20 +1,23 @@
 package lista4
 
-fun main(){
-    val tries = 10000000
-    for (z in 1..10) {
+fun main() {
+    val elemsInQ = 10000
+    val loop = 10000
+    repeat(10) {
 
         run {
             val timer = System.currentTimeMillis()
-
-            var myQueue = FullQueue<Int>()
-            for (i in 0..tries) {
-                myQueue = myQueue.enqueue(i)
-            }
-            for (i in 0..tries) {
-                myQueue = myQueue.dequeue()
+            repeat(loop) {
+                var myQueue = FullQueue<Int>()
+                for (i in 0..elemsInQ) {
+                    myQueue = myQueue.enqueue(i)
+                }
+                for (i in 0..elemsInQ) {
+                    myQueue = myQueue.dequeue()
+                }
             }
             println(System.currentTimeMillis() - timer)
+
         }
         System.gc()
         Thread.sleep(2000)
