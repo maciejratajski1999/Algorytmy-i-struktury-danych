@@ -16,27 +16,27 @@ sealed class MList<T> {
     abstract fun tail(): MList<T>
     abstract fun head(): T?
 }
-fun <T> append(list: MList<T>, last: T):MList<T> = when(list){
+tailrec fun <T> append(list: MList<T>, last: T):MList<T> = when(list){
     is MList.NIL -> MList.Node(last, list)
     is MList.Node -> MList.Node(list.head(),append(list.tail(), last))
 }
-fun main() {
-    val x = MList.NIL<Int>()
-    println(x)
-
-    val y = MList.Node(7,x)
-    println(y)
-
-    val z = MList.Node(5, y)
-    println(z)
-
-    println(z.tail())
-    println(z.tail().head())
-    println(x.head())
-
-    val a = z.tail().head()
-    if (a != null){
-        println(a+1)
-    }
-    println(append(z,10))
-}
+//fun main() {
+//    val x = MList.NIL<Int>()
+//    println(x)
+//
+//    val y = MList.Node(7,x)
+//    println(y)
+//
+//    val z = MList.Node(5, y)
+//    println(z)
+//
+//    println(z.tail())
+//    println(z.tail().head())
+//    println(x.head())
+//
+//    val a = z.tail().head()
+//    if (a != null){
+//        println(a+1)
+//    }
+//    println(append(z,10))
+//}
