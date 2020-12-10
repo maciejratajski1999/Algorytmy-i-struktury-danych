@@ -2,32 +2,24 @@ package lista4
 
 fun main(){
     val tries = 10000000
-    run {
-        val timer = System.currentTimeMillis()
+    for (z in 1..10) {
 
-        var myQueue = FullQueue<Int>()
-        for (i in 0..tries) {
-            myQueue = myQueue.enqueue(i)
-        }
-        for (i in 0..tries) {
-            myQueue = myQueue.dequeue()
-        }
-        println(System.currentTimeMillis() - timer)
-    }
-    System.gc()
-    Thread.sleep(1000)
-    run {
-        val timer = System.currentTimeMillis()
+        run {
+            val timer = System.currentTimeMillis()
 
-        var myQueue = FullQueue<Int>()
-        for (i in 0..tries) {
-            myQueue = myQueue.enqueue(i)
+            var myQueue = FullQueue<Int>()
+            for (i in 0..tries) {
+                myQueue = myQueue.enqueue(i)
+            }
+            for (i in 0..tries) {
+                myQueue = myQueue.dequeue()
+            }
+            println(System.currentTimeMillis() - timer)
         }
-        for (i in 0..tries) {
-            myQueue = myQueue.dequeue()
-        }
-        println(System.currentTimeMillis() - timer)
+        System.gc()
+        Thread.sleep(2000)
     }
+
 }
 // for tries = 100000 : 38608  <-- naive append
 // for tries = 100000 : 38009  <-- naive append v.2

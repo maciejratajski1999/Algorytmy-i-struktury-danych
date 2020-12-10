@@ -21,5 +21,12 @@ test {
 }
 
 compileKotlin {
-    kotlinOptions.allWarningsAsErrors = true
+    kotlinOptions{
+        allWarningsAsErrors = true
+        freeCompilerArgs += [
+                '-Xno-call-assertions',
+                '-Xno-receiver-assertions',
+                '-Xno-param-assertions'
+        ]
+    }
 }
