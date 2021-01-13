@@ -27,7 +27,7 @@ fun der(a:Expr, x:String):Expr = when(a){
 }
 
 fun main(){
-    val fx = Expr.Pow(Expr.Const(2.0),Expr.Var("x"))
+    val fx = Expr.Min(Expr.Plus(Expr.Mul(Expr.Const(8.0),Expr.Var("x")),Expr.Const(3.0)), Expr.Mul(Expr.Const(2.0), Expr.Pow(Expr.Var("x"), Expr.Const(2.0))))
     println(der(fx, "x").toString())
 }
 
